@@ -11,8 +11,12 @@ name: Java CI with Maven
 on:
   push:
     branches: [ "java-with-maven" ]
+    paths:
+    -  'back/**'
   pull_request:
     branches: [ "main" ]
+    paths:
+    -  'back/**'
 
 jobs:
   build:
