@@ -2,38 +2,57 @@ name: E2E
 
 on:
   push:
-    branches: [main]
+    branches: [ main ]
   pull_request:
-    branches: [main]
+    branches: [ main ]
 
 jobs:
   e2e:
     runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: front
 
     steps:
-      - name: Checkout repo
+      - name: Checkout code
         uses: actions/checkout@v4
 
-      - name: Use Node.js
+      # BACKEND
+      - name: Set up Java
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'temurin'
+          java-version: '11'
+          cache: maven
+
+      - name: Install backend dependencies
+        working-directory: back
+        run: mvn clean install -DskipTests
+
+      - name: Start backend
+        working-directory: back
+        run: mvn spring-boot:run &
+
+      - name: Wait for backend to boot
+        run: sleep 20
+
+      # FRONTEND
+      - name: Set up Node.js
         uses: actions/setup-node@v3
         with:
           node-version: 18
 
-      - name: Install dependencies
+      - name: Install frontend dependencies
         run: npm install --legacy-peer-deps
-        working-directory: front
 
       - name: Run Cypress e2e tests
         run: npm run e2e:ci
-        working-directory: front
 
-      - name: Generate coverage report
+      - name: Generate Cypress code coverage
         run: npm run e2e:coverage
-        working-directory: front
 
       - name: Upload lcov-report artifact
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v3
         with:
           name: lcov-report
           path: front/coverage/lcov-report
-
