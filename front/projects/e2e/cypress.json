@@ -1,0 +1,10 @@
+{
+  "integrationFolder": "projects/e2e/cypress/integration",
+  "supportFile": "projects/e2e/cypress/support/index.ts",
+  "videosFolder": "projects/e2e/cypress/videos",
+  "screenshotsFolder": "projects/e2e/cypress/screenshots",
+  "pluginsFile": "projects/e2e/cypress/plugins/index.js",
+  "fixturesFolder": "projects/e2e/cypress/fixtures",
+  "baseUrl": "http://localhost:4200",
+  "projectId": "d6gihf"
+}
