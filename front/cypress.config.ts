@@ -1,19 +1,15 @@
-import { defineConfig } from 'cypress'
-import codeCoverageTask from '@cypress/code-coverage/task';
+import { defineConfig } from 'cypress';
+import * as coverageTask from '@cypress/code-coverage/task';
+const codeCoverageTask = (coverageTask as any).default ?? coverageTask;
 
 export default defineConfig({
-  videosFolder: 'cypress/videos',
-  screenshotsFolder: 'cypress/screenshots',
-  fixturesFolder: 'cypress/fixtures',
-  projectId: 'd6gihf',
   e2e: {
-    // We've imported your old cypress plugins here.
-    // You may want to clean this up later by importing these.
     setupNodeEvents(on, config) {
       codeCoverageTask(on, config);
-      return require('./cypress/plugins/index.js')(on, config)
+      return config;
     },
     baseUrl: 'http://localhost:4200',
-    specPattern: 'cypress/e2e/**/*.{js,jsx,ts,tsx}',
-  },
-})
+    specPattern: 'cypress/e2e/**/*.cy.{js,ts}',
+    supportFile: 'cypress/support/e2e.ts'
+  }
+});
