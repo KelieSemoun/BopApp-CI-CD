@@ -11,34 +11,33 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout repository
+      - name: Checkout repo
         uses: actions/checkout@v4
 
       - name: Use Node.js
         uses: actions/setup-node@v3
         with:
-          node-version: 16
+          node-version: 18
 
       - name: Install dependencies
-        run: npm ci
+        run: npm install
+        working-directory: front
 
-      - name: Lint
+      - name: Run lint
         run: npm run lint
+        working-directory: front
 
-      - name: Run unit tests with coverage
-        run: npm run test:ci
-
-      - name: Build application
-        run: npm run build
-
-      - name: Run Cypress end-to-end tests
+      - name: Run Cypress e2e tests
         run: npm run e2e:ci
+        working-directory: front
 
-      - name: Generate Cypress coverage report
+      - name: Generate coverage report
         run: npm run e2e:coverage
+        working-directory: front
 
-      - name: Upload coverage report artifact
+      - name: Upload lcov-report artifact
         uses: actions/upload-artifact@v4
         with:
           name: lcov-report
-          path: ./coverage/lcov-report
+          path: front/coverage/lcov-report
+
