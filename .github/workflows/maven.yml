@@ -67,9 +67,4 @@ jobs:
         working-directory: back
         env:
           SONAR_TOKEN: ${{ secrets.BOBAPP_SONAR_TOKEN }}
-        run: |
-          mvn -B verify org.sonarsource.scanner.maven:sonar-maven-plugin:sonar \
-          -Dsonar.projectKey=KelieSemoun_BopApp-CI-CD \
-          -Dsonar.organization=keliesemoun \
-          -Dsonar.host.url=https://sonarcloud.io
-
+        run: mvn -B verify org.sonarsource.scanner.maven:sonar-maven-plugin:sonar -Dsonar.projectKey=KelieSemoun_BopApp-CI-CD
