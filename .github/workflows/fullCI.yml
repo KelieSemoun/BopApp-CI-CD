@@ -96,11 +96,11 @@ jobs:
         with:
           context: front/
           push: true
-          tags: user/bobapp-front:latest
+          tags: ${{ vars.DOCKERHUB_USERNAME }}/bobapp-front:latest
 
       - name: Build and push backend
         uses: docker/build-push-action@v6
         with:
           context: back/
           push: true
-          tags: user/bobapp-back:latest
+          tags: ${{ vars.DOCKERHUB_USERNAME }}/bobapp-back:latest
