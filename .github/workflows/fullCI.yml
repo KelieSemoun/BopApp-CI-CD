@@ -74,6 +74,7 @@ jobs:
           SONAR_TOKEN: ${{ secrets.BOBAPP_SONAR_TOKEN }}
 
   docker:
+    needs: [frontend, backend]
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
